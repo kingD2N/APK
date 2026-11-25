@@ -17,6 +17,10 @@ Signature verification has to be off on the device (CorePatch or similar). Then 
 
 ## Builds
 
-`.github/workflows/morphe-root.yml` grabs the latest Morphe CLI and patches (dev channel), picks the newest app version those patches support, pulls the stock APK from APKPure and patches it.
+`.github/workflows/morphe-root.yml` grabs the latest Morphe CLI and patches (dev channel), picks the newest app version those patches support and patches it.
+
+The stock APK is tried from APKMirror, Uptodown, archive.org, APKPure and Google Play, in that order. Only a full APK signed by Google is used. If the newest supported version isn't up anywhere yet, the build stops instead of falling back to an older one. Google Play needs the `GPLAY_EMAIL` and `GPLAY_AAS_TOKEN` secrets; without them that source is skipped.
+
+SHA-256 checksums are listed in each release's notes.
 
 It runs every day at 19:17 UTC. If nothing changed since the last release it skips the build. You can also start it by hand from the Actions tab and choose the app, patch channel, version, or a direct APK link.
